@@ -217,9 +217,11 @@ function runPendingScans() {
 }
 
 function reportBadge() {
-  chrome.runtime.sendMessage({ type: 'setBadge', count: pageCounts.size }, () => {
-    void chrome.runtime.lastError;
-  });
+  try {
+    chrome.runtime.sendMessage({ type: 'setBadge', count: pageCounts.size }, () => {
+      void chrome.runtime.lastError;
+    });
+  } catch (_) {}
 }
 
 // ── TreeWalker Scan ───────────────────────────────────────────────────────────
@@ -343,9 +345,11 @@ function setupObserver() {
 function undoHighlighting() {
   observer.disconnect();
   pageCounts.clear();
-  chrome.runtime.sendMessage({ type: 'setBadge', count: 0 }, () => {
-    void chrome.runtime.lastError;
-  });
+  try {
+    chrome.runtime.sendMessage({ type: 'setBadge', count: 0 }, () => {
+      void chrome.runtime.lastError;
+    });
+  } catch (_) {}
   document.querySelectorAll(`.${SPAN_CLASS}`).forEach(span => {
     const parent = span.parentNode;
     if (!parent) return;
