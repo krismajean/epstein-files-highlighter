@@ -59,7 +59,7 @@ manifest-extension/
 │   ├── names.js               # Hardcoded fallback name list (~155 people)
 │   └── content.js             # Page scanner, DOM injection, highlight logic
 ├── icons/
-│   ├── wiki-w.svg             # Inline icon shown next to names
+│   ├── manifest.svg           # Inline icon shown next to names
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
