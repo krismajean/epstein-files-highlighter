@@ -1,9 +1,20 @@
 // popup.js
 const WIKI_BASE = 'https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#';
 
+const COLORS = [
+  { hex: '#ffe066', label: 'Yellow' },
+  { hex: '#90ee90', label: 'Green' },
+  { hex: '#87cefa', label: 'Blue' },
+  { hex: '#ffb347', label: 'Orange' },
+  { hex: '#ff9999', label: 'Red' },
+  { hex: '#da90f5', label: 'Purple' },
+  { hex: '#ffffff', label: 'White' },
+];
+
 // ── Storage: prefs + status ───────────────────────────────────────────────────
 chrome.storage.local.get(
-  ['epsteinNames', 'namesFetchedAt', 'enabled', 'showIcon', 'showHighlight'],
+  ['epsteinNames', 'namesFetchedAt', 'enabled', 'showIcon', 'showHighlight',
+   'highlightColor', 'iconColor'],
   (result) => {
     const count = result.epsteinNames?.length ?? 155;
     const fetched = result.namesFetchedAt;
@@ -41,8 +52,36 @@ chrome.storage.local.get(
     cbHL.addEventListener('change', () => {
       chrome.storage.local.set({ showHighlight: cbHL.checked });
     });
+
+    // Color swatches
+    const iconColor      = result.iconColor      || '#ffe066';
+    const highlightColor = result.highlightColor || '#ffe066';
+
+    buildSwatches('iconSwatches',      iconColor,      (color) => {
+      chrome.storage.local.set({ iconColor: color });
+    });
+    buildSwatches('highlightSwatches', highlightColor, (color) => {
+      chrome.storage.local.set({ highlightColor: color });
+    });
   }
 );
+
+function buildSwatches(containerId, activeColor, onChange) {
+  const container = document.getElementById(containerId);
+  for (const { hex, label } of COLORS) {
+    const swatch = document.createElement('div');
+    swatch.className = 'swatch' + (hex === activeColor ? ' active' : '');
+    swatch.style.background = hex;
+    swatch.style.boxShadow = hex === '#ffffff' ? 'inset 0 0 0 1px #ccc' : 'none';
+    swatch.title = label;
+    swatch.addEventListener('click', () => {
+      container.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+      onChange(hex);
+    });
+    container.appendChild(swatch);
+  }
+}
 
 function updateSubToggles(enabled) {
   document.getElementById('subToggles').classList.toggle('disabled', !enabled);

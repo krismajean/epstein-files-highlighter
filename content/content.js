@@ -24,6 +24,7 @@ const pageCounts = new Map(); // canonical name -> count
 async function init() {
   const stored = await chrome.storage.local.get([
     'epsteinNames', 'namesFetchedAt', 'enabled', 'showIcon', 'showHighlight',
+    'highlightColor', 'iconColor',
   ]);
 
   if (stored.enabled === false) return;
@@ -37,6 +38,7 @@ async function init() {
   buildPattern(names);
   injectStyles();
   applyDisplayPrefs(stored);
+  applyColors(stored);
   queueScan(document.body);
   setupObserver();
 
@@ -52,6 +54,9 @@ async function init() {
     if (changes.showIcon || changes.showHighlight) {
       chrome.storage.local.get(['showIcon', 'showHighlight'], applyDisplayPrefs);
     }
+    if (changes.highlightColor || changes.iconColor) {
+      chrome.storage.local.get(['highlightColor', 'iconColor'], applyColors);
+    }
   });
 }
 
@@ -60,6 +65,35 @@ function applyDisplayPrefs(prefs) {
   if (!body) return;
   body.classList.toggle('manifest-hide-icon',      prefs.showIcon      === false);
   body.classList.toggle('manifest-hide-highlight', prefs.showHighlight === false);
+}
+
+function applyColors(prefs) {
+  const highlightColor = prefs.highlightColor || '#ffe066';
+  const iconColor      = prefs.iconColor      || '#ffe066';
+
+  let colorStyle = document.getElementById('manifest-color-styles');
+  if (!colorStyle) {
+    colorStyle = document.createElement('style');
+    colorStyle.id = 'manifest-color-styles';
+    (document.head || document.documentElement).appendChild(colorStyle);
+  }
+
+  // Icon is an inline SVG data URI so we can swap the fill color directly
+  const svgIcon = encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" width="14" height="16">` +
+    `<rect x="0" y="5" width="14" height="6" rx="1.5" fill="${iconColor}"/>` +
+    `<rect x="1" y="7.5" width="12" height="1.5" rx="0.75" fill="#5a4800" opacity="0.75"/>` +
+    `</svg>`
+  );
+
+  colorStyle.textContent = `
+    .${SPAN_CLASS}.manifest-highlighted {
+      background: ${highlightColor} !important;
+    }
+    .${ICON_CLASS} {
+      background-image: url('data:image/svg+xml,${svgIcon}') !important;
+    }
+  `;
 }
 
 // ── Pattern Building ──────────────────────────────────────────────────────────

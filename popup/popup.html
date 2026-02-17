@@ -144,6 +144,35 @@
       transform: translateX(12px);
     }
 
+    /* ── Color pickers ── */
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 5px;
+      padding-left: 2px;
+    }
+    .color-row label {
+      font-size: 10.5px;
+      color: #999;
+      flex-shrink: 0;
+    }
+    .swatches {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .swatch:hover { transform: scale(1.15); }
+    .swatch.active { border-color: #333; }
+
     /* ── Page hits ── */
     .page-hits {
       border-bottom: 1px solid #eee;
@@ -265,12 +294,20 @@
           <span class="slider"></span>
         </label>
       </div>
+      <div class="color-row" id="iconColorRow">
+        <label>Color</label>
+        <div class="swatches" id="iconSwatches"></div>
+      </div>
       <div class="toggle-row sub">
         <label for="showHighlight">Highlight name</label>
         <label class="switch small">
           <input type="checkbox" id="showHighlight" checked>
           <span class="slider"></span>
         </label>
+      </div>
+      <div class="color-row" id="highlightColorRow">
+        <label>Color</label>
+        <div class="swatches" id="highlightSwatches"></div>
       </div>
     </div>
   </div>
