@@ -57,8 +57,10 @@ chrome.storage.local.get(
     const highlightColor = result.highlightColor || '#ffe066';
     const isRedact       = highlightColor === '#000000';
 
+    updateIconPreview(iconColor);
     buildSwatches('iconSwatches', iconColor, (color) => {
       chrome.storage.local.set({ iconColor: color });
+      updateIconPreview(color);
     });
     buildSwatches('highlightSwatches', highlightColor, (color) => {
       chrome.storage.local.set({ highlightColor: color });
@@ -96,6 +98,11 @@ function buildSwatches(containerId, activeColor, onChange) {
     });
     container.appendChild(swatch);
   }
+}
+
+function updateIconPreview(color) {
+  const band = document.getElementById('iconPreviewBand');
+  if (band) band.setAttribute('fill', color);
 }
 
 function updateSubToggles(enabled) {

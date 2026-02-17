@@ -144,14 +144,33 @@
       transform: translateX(12px);
     }
 
-    /* ── Section labels ── */
-    .section-label {
-      font-size: 10px;
+    /* ── Option sections ── */
+    .option-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .option-title {
+      font-size: 12px;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: #aaa;
-      margin-bottom: 6px;
+      color: #333;
+    }
+    .option-body {
+      margin-top: 8px;
+      padding-left: 2px;
+    }
+    .icon-preview-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .icon-preview-label {
+      font-size: 10.5px;
+      color: #999;
+    }
+    #iconPreview {
+      display: block;
     }
     .master-controls {
       border-top: 2px solid #e0e0e0;
@@ -334,37 +353,50 @@
 
   <!-- Display options -->
   <div class="controls" id="subToggles">
-    <div class="section-label">Highlight name</div>
-    <div class="redact-row" id="redactRow">
-      <div class="redact-swatch">
-        <span class="redact-label">Redact</span>
-      </div>
-      <span class="redact-desc">Black bar hides name — hover to reveal</span>
-    </div>
-    <div class="color-row" style="margin-top:8px;">
-      <label>Color</label>
-      <div class="swatches" id="highlightSwatches"></div>
-    </div>
-    <div class="toggle-row sub" style="margin-top:10px; padding-top:10px; border-top:1px solid #eee;">
-      <label for="showHighlight">Show highlight</label>
+
+    <!-- Highlight name section -->
+    <div class="option-header">
+      <span class="option-title">Highlight Name from Epstein List</span>
       <label class="switch small">
         <input type="checkbox" id="showHighlight" checked>
         <span class="slider"></span>
       </label>
     </div>
-
-    <div class="section-label" style="margin-top:12px;">Show icon</div>
-    <div class="color-row">
-      <label>Color</label>
-      <div class="swatches" id="iconSwatches"></div>
+    <div class="option-body" id="highlightBody">
+      <div class="redact-row" id="redactRow">
+        <div class="redact-swatch">
+          <span class="redact-label">Redact</span>
+        </div>
+        <span class="redact-desc">Black bar hides name — hover to reveal</span>
+      </div>
+      <div class="color-row" style="margin-top:8px;">
+        <label>Color</label>
+        <div class="swatches" id="highlightSwatches"></div>
+      </div>
     </div>
-    <div class="toggle-row sub" style="margin-top:8px;">
-      <label for="showIcon">Show icon</label>
+
+    <!-- Icon section -->
+    <div class="option-header" style="margin-top:10px; padding-top:10px; border-top:1px solid #eee;">
+      <span class="option-title">Show Icon Next to Name</span>
       <label class="switch small">
         <input type="checkbox" id="showIcon" checked>
         <span class="slider"></span>
       </label>
     </div>
+    <div class="option-body" id="iconBody">
+      <div class="icon-preview-row">
+        <span class="icon-preview-label">Preview</span>
+        <svg id="iconPreview" width="14" height="16" viewBox="0 0 14 16" xmlns="http://www.w3.org/2000/svg">
+          <rect id="iconPreviewBand" x="0" y="5" width="14" height="6" rx="1.5" fill="#ffe066"/>
+          <rect x="1" y="7.5" width="12" height="1.5" rx="0.75" fill="#5a4800" opacity="0.75"/>
+        </svg>
+      </div>
+      <div class="color-row" style="margin-top:6px;">
+        <label>Color</label>
+        <div class="swatches" id="iconSwatches"></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Master toggle -->
