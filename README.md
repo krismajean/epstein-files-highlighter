@@ -2,7 +2,7 @@
 
 > *Bringing light to the darkness*
 
-Manifest is a Chrome extension that highlights names from the [Epstein files](https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files) as you browse the web, so you can see how often these people appear on the pages you read.
+Manifest highlights names from the [Epstein files](https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files) as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.
 
 ---
 

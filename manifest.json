@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Manifest",
   "version": "1.0.0",
-  "description": "Bringing light to the darkness — Manifest highlights names from the Epstein files as you browse. Appearing in the files does not imply wrongdoing; names include victims, witnesses, and incidental mentions. Matches are by name only — click the icon to view the Wikipedia entry and judge for yourself.",
+  "description": "Manifest highlights names from the Epstein files as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.",
   "permissions": ["storage", "alarms", "tabs", "scripting"],
   "host_permissions": ["<all_urls>"],
   "background": {
