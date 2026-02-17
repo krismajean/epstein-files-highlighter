@@ -9,7 +9,6 @@ const COLORS = [
   { hex: '#ff9999', label: 'Red' },
   { hex: '#da90f5', label: 'Purple' },
   { hex: '#ffffff', label: 'White' },
-  { hex: '#000000', label: 'Redact — hover to reveal' },
 ];
 
 // ── Storage: prefs + status ───────────────────────────────────────────────────
@@ -57,12 +56,27 @@ chrome.storage.local.get(
     // Color swatches
     const iconColor      = result.iconColor      || '#ffe066';
     const highlightColor = result.highlightColor || '#ffe066';
+    const isRedact       = highlightColor === '#000000';
 
-    buildSwatches('iconSwatches',      iconColor,      (color) => {
+    buildSwatches('iconSwatches', iconColor, (color) => {
       chrome.storage.local.set({ iconColor: color });
     });
     buildSwatches('highlightSwatches', highlightColor, (color) => {
       chrome.storage.local.set({ highlightColor: color });
+      document.getElementById('redactRow').classList.remove('active');
+    });
+
+    // Redact row
+    const redactRow = document.getElementById('redactRow');
+    if (isRedact) redactRow.classList.add('active');
+    redactRow.addEventListener('click', () => {
+      const nowRedact = !redactRow.classList.contains('active');
+      redactRow.classList.toggle('active', nowRedact);
+      const newColor = nowRedact ? '#000000' : '#ffe066';
+      chrome.storage.local.set({ highlightColor: newColor });
+      // Deselect all highlight swatches when redact is active
+      document.querySelectorAll('#highlightSwatches .swatch')
+        .forEach(s => s.classList.toggle('active', s.dataset.hex === newColor));
     });
   }
 );
@@ -74,10 +88,7 @@ function buildSwatches(containerId, activeColor, onChange) {
     swatch.className = 'swatch' + (hex === activeColor ? ' active' : '');
     swatch.style.background = hex;
     swatch.style.boxShadow = hex === '#ffffff' ? 'inset 0 0 0 1px #ccc' : 'none';
-    if (hex === '#000000') {
-      swatch.style.outline = '1.5px dashed #999';
-      swatch.style.outlineOffset = '1px';
-    }
+    swatch.dataset.hex = hex;
     swatch.title = label;
     swatch.addEventListener('click', () => {
       container.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));

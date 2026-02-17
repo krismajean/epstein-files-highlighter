@@ -21,18 +21,26 @@ The name list is fetched from Wikipedia and cached locally, refreshing automatic
 
 ## Features
 
-- **Toolbar badge** — at-a-glance count of Epstein file name mentions on the current page
+- **Toolbar badge** — at-a-glance count of unique Epstein file names on the current page
 - **Popup** — shows which names appear on the page and how many times each occurs
 - **Toggle icon** — show or hide the highlighter icon next to names
-- **Toggle highlight** — show or hide the yellow background on matched names
+- **Toggle highlight** — show or hide the colored background on matched names
+- **Color picker** — choose your highlight and icon color from 7 options
+- **Redact mode** — hides names under a black bar with a red outline, like a classified document; hover over the bar to reveal the name
 - **Master on/off switch** — disable entirely with one click
 - Works on any website, including dynamically loaded content (SPAs, infinite scroll)
 
+### Redact mode
+
+Selecting **Redact** in the highlight color options replaces the colored highlight with a solid black bar outlined in red — the name is hidden from view. Hovering over the bar reveals the name in white. This is useful if you want to notice *that* a name appears without immediately seeing *who* it is, or simply to make flagged names more visually striking on the page.
+
 ---
 
-## A note on matching
+## Important disclaimer
 
-Matching is by name only. Someone who shares a name with a person listed in the Epstein files may occasionally be tagged. Click the icon to visit their Wikipedia entry and judge for yourself.
+**Appearing in the Epstein files does not mean a person has done anything wrong.** The files include names of victims, witnesses, associates, and people mentioned only incidentally. Manifest makes no judgement about any individual — it simply shows you who appears, and lets you follow through to Wikipedia to read the context for yourself.
+
+Matching is also by name only. Someone who shares a name with a listed person may occasionally be tagged in error. Always click through to verify.
 
 ---
 
