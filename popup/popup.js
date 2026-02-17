@@ -100,7 +100,9 @@ function buildSwatches(containerId, activeColor, onChange) {
 }
 
 function updateSubToggles(enabled) {
-  document.getElementById('subToggles').classList.toggle('disabled', !enabled);
+  const el = document.getElementById('subToggles');
+  el.style.opacity = enabled ? '' : '0.4';
+  el.style.pointerEvents = enabled ? '' : 'none';
 }
 
 // ── Page hits: ask the active tab's content script ────────────────────────────

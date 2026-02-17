@@ -144,6 +144,20 @@
       transform: translateX(12px);
     }
 
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+    .master-controls {
+      border-top: 2px solid #e0e0e0;
+      background: #fafafa;
+    }
+
     /* ── Color pickers ── */
     .color-row {
       display: flex;
@@ -312,7 +326,49 @@
     </div>
   </div>
 
-  <div class="controls">
+  <!-- Names found on this page -->
+  <div class="page-hits" id="pageHits">
+    <div class="page-hits-header">On this page</div>
+    <div id="hitsList"><span class="none">Scanning…</span></div>
+  </div>
+
+  <!-- Display options -->
+  <div class="controls" id="subToggles">
+    <div class="section-label">Highlight name</div>
+    <div class="redact-row" id="redactRow">
+      <div class="redact-swatch">
+        <span class="redact-label">Redact</span>
+      </div>
+      <span class="redact-desc">Black bar hides name — hover to reveal</span>
+    </div>
+    <div class="color-row" style="margin-top:8px;">
+      <label>Color</label>
+      <div class="swatches" id="highlightSwatches"></div>
+    </div>
+    <div class="toggle-row sub" style="margin-top:10px; padding-top:10px; border-top:1px solid #eee;">
+      <label for="showHighlight">Show highlight</label>
+      <label class="switch small">
+        <input type="checkbox" id="showHighlight" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="section-label" style="margin-top:12px;">Show icon</div>
+    <div class="color-row">
+      <label>Color</label>
+      <div class="swatches" id="iconSwatches"></div>
+    </div>
+    <div class="toggle-row sub" style="margin-top:8px;">
+      <label for="showIcon">Show icon</label>
+      <label class="switch small">
+        <input type="checkbox" id="showIcon" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Master toggle -->
+  <div class="controls master-controls">
     <div class="toggle-row">
       <label for="enabled">Enable Manifest</label>
       <label class="switch">
@@ -321,42 +377,6 @@
       </label>
     </div>
     <div class="status" id="status">Loading…</div>
-    <div class="sub-toggles" id="subToggles">
-      <div class="toggle-row sub">
-        <label for="showIcon">Show icon</label>
-        <label class="switch small">
-          <input type="checkbox" id="showIcon" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="color-row" id="iconColorRow">
-        <label>Color</label>
-        <div class="swatches" id="iconSwatches"></div>
-      </div>
-      <div class="toggle-row sub">
-        <label for="showHighlight">Highlight name</label>
-        <label class="switch small">
-          <input type="checkbox" id="showHighlight" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="color-row" id="highlightColorRow">
-        <label>Color</label>
-        <div class="swatches" id="highlightSwatches"></div>
-      </div>
-      <div class="redact-row" id="redactRow">
-        <div class="redact-swatch" id="redactSwatch">
-          <span class="redact-label">Redact</span>
-        </div>
-        <span class="redact-desc">Black bar hides name — hover to reveal</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Names found on this page -->
-  <div class="page-hits" id="pageHits">
-    <div class="page-hits-header">On this page</div>
-    <div id="hitsList"><span class="none">Scanning…</span></div>
   </div>
 
   <div class="footer">
