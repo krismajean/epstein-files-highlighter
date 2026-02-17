@@ -4,11 +4,7 @@ const WIKI_BASE = 'https://en.wikipedia.org/wiki/List_of_people_named_in_the_Eps
 const COLORS = [
   { hex: '#ffe066', label: 'Yellow' },
   { hex: '#90ee90', label: 'Green' },
-  { hex: '#87cefa', label: 'Blue' },
-  { hex: '#ffb347', label: 'Orange' },
-  { hex: '#ff9999', label: 'Red' },
   { hex: '#da90f5', label: 'Purple' },
-  { hex: '#ffffff', label: 'White' },
 ];
 
 // ── Storage: prefs + status ───────────────────────────────────────────────────
