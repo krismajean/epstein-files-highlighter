@@ -37,7 +37,13 @@ async function fetchAndCacheNames() {
       if (/^[A-Za-z]$/.test(name)) continue;
       // Skip alphabet range headers (A-C, D-F, ...) and other known section titles
       if (ALPHABET_RANGE.test(name) || SKIP_SECTIONS.has(name)) continue;
-      names.push({ name, anchor });
+      // Split "X and Y" into two entries with the same anchor so both highlight and link to same section
+      if (name.includes(' and ')) {
+        const parts = name.split(' and ').map((p) => p.trim()).filter(Boolean);
+        for (const part of parts) names.push({ name: part, anchor });
+      } else {
+        names.push({ name, anchor });
+      }
     }
 
     // Sanity check — reject obviously broken responses
