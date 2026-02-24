@@ -1,16 +1,16 @@
-# Privacy Policy — Manifest
+# Privacy Policy — Epstein Manifest
 
 *Last updated: February 2026*
 
 ## Overview
 
-Manifest is a free, open-source Chrome extension built for public interest. This policy explains what data the extension accesses, how it is used, and what is never collected.
+Epstein Manifest is a free, open-source Chrome extension built for public interest. This policy explains what data the extension accesses, how it is used, and what is never collected.
 
 ---
 
 ## What the extension accesses
 
-When you visit a webpage, Manifest reads the **text content of that page** locally in your browser to check whether any names from the Epstein files Wikipedia list appear on it. This processing happens entirely on your device.
+When you visit a webpage, Epstein Manifest reads the **text content of that page** locally in your browser to check whether any names from the Epstein files Wikipedia list appear on it. This processing happens entirely on your device.
 
 ---
 
@@ -29,7 +29,7 @@ When you visit a webpage, Manifest reads the **text content of that page** local
 
 The extension does **not** request access to any website at install time. It works immediately using a built-in name list.
 
-The only external request Manifest can make is to the **Wikipedia API** to fetch and locally cache an updated list of names from the article *List of people named in the Epstein files*. This happens only if you click **Sync from Wikipedia** in the popup (or turn on **Auto-sync from Wikipedia**) and grant access to en.wikipedia.org when prompted. If you never grant it, the extension never contacts Wikipedia. If you do grant it:
+The only external request Epstein Manifest can make is to the **Wikipedia API** to fetch and locally cache an updated list of names from the article *List of people named in the Epstein files*. This happens only if you click **Sync from Wikipedia** in the popup (or turn on **Auto-sync from Wikipedia**) and grant access to en.wikipedia.org when prompted. If you never grant it, the extension never contacts Wikipedia. If you do grant it:
 
 - The request contains no personal information
 - The list is refreshed on browser startup when the cache is older than 24 hours (only while you have granted access)
@@ -42,7 +42,7 @@ No other network requests are made.
 
 ## Local storage
 
-Manifest stores the following in your browser's local extension storage (`chrome.storage.local`):
+Epstein Manifest stores the following in your browser's local extension storage (`chrome.storage.local`):
 
 - The cached name list fetched from Wikipedia
 - Your display preferences (highlight color, icon visibility, auto-sync on/off, etc.)
@@ -64,7 +64,7 @@ This data never leaves your device.
 
 ## Open source
 
-Manifest is fully open source. You can inspect all code at:
+Epstein Manifest is fully open source. You can inspect all code at:
 [https://github.com/krismajean/manifest-extension](https://github.com/krismajean/manifest-extension)
 
 ---

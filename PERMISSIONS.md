@@ -1,4 +1,4 @@
-# Permission Justifications — Manifest
+# Permission Justifications — Epstein Manifest
 
 This document explains why each permission and capability in the extension manifest is required. Use for Chrome Web Store submission or review.
 
@@ -121,4 +121,4 @@ If the store or a reviewer asks you to use **activeTab** or **specific sites** i
 
 ---
 
-*Manifest extension — permission justifications. For full privacy details see [PRIVACY.md](PRIVACY.md).*
+*Epstein Manifest extension — permission justifications. For full privacy details see [PRIVACY.md](PRIVACY.md).*

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Manifest BETA",
-  "version": "1.0.0",
-  "description": "THIS EXTENSION IS FOR BETA TESTING. Highlights names from the Epstein files as you browse.",
+  "name": "Epstein Manifest",
+  "version": "1.0.1",
+  "description": "Highlights names from the Epstein files as you browse.",
   "permissions": ["storage", "activeTab", "alarms"],
   "optional_host_permissions": ["https://en.wikipedia.org/*"],
   "background": {
@@ -37,6 +37,6 @@
       "48": "icons/icon48.png"
     },
     "default_popup": "popup/popup.html",
-    "default_title": "Manifest"
+    "default_title": "Epstein Manifest"
   }
 }
