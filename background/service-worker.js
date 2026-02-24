@@ -12,8 +12,13 @@ const WIKI_API =
 
 const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
-// Single-letter headers (A, B, C...) and navigation sections to skip
-const SKIP_SECTIONS = new Set(['References', 'External links', 'Contents', 'See also', 'Notes']);
+// Section headers and nav to skip (not people's names)
+const SKIP_SECTIONS = new Set([
+  'References', 'External links', 'Contents', 'See also', 'Notes',
+  'Background', 'Releases', 'Redactions', 'Litigation', 'Names', 'Name',
+]);
+// Alphabet range headers from the Wikipedia list (e.g. "A-C", "D-F")
+const ALPHABET_RANGE = /^[A-Za-z]-[A-Za-z]$/;
 
 async function fetchAndCacheNames() {
   try {
@@ -30,7 +35,8 @@ async function fetchAndCacheNames() {
       if (!name || !anchor) continue;
       // Skip single-letter alphabet grouping headers (A, B, C, ...)
       if (/^[A-Za-z]$/.test(name)) continue;
-      if (SKIP_SECTIONS.has(name)) continue;
+      // Skip alphabet range headers (A-C, D-F, ...) and other known section titles
+      if (ALPHABET_RANGE.test(name) || SKIP_SECTIONS.has(name)) continue;
       names.push({ name, anchor });
     }
 
