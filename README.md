@@ -66,7 +66,7 @@ manifest-extension/
 ├── background/
 │   └── service-worker.js      # Fetches & caches name list, manages toolbar badge
 ├── content/
-│   ├── names.js               # Hardcoded fallback name list (~156 people)
+│   ├── names.js               # Hardcoded fallback name list (generated from Wikipedia)
 │   └── content.js             # Page scanner, DOM injection, highlight logic
 ├── icons/
 │   ├── manifest.svg           # Inline icon shown next to names
@@ -74,10 +74,26 @@ manifest-extension/
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
-└── popup/
-    ├── popup.html             # Extension popup UI
-    └── popup.js               # Popup logic
+├── popup/
+│   ├── popup.html             # Extension popup UI
+│   └── popup.js               # Popup logic
+└── scripts/
+    └── update.py              # Refresh names.js from Wikipedia and/or create store zip
 ```
+
+---
+
+## Development
+
+To refresh the hardcoded name list from Wikipedia and create the Chrome Web Store zip:
+
+```bash
+python3 scripts/update.py              # update list + create manifest-extension.zip
+python3 scripts/update.py --list       # only update content/names.js
+python3 scripts/update.py --zip       # only create manifest-extension.zip
+```
+
+The zip is written to the parent folder (e.g. `chrome/manifest-extension.zip`).
 
 ---
 
