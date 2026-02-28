@@ -317,7 +317,7 @@ function processTextNode(textNode) {
     link.href = WIKI_BASE + entry.anchor;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.title = `${entry.name} — named in Epstein files · Manifest`;
+    link.title = `${entry.name} — named in Epstein files · Epstein Files Highlighter`;
     link.setAttribute('aria-label', `${entry.name} named in Epstein files`);
     frag.appendChild(link);
 
@@ -387,4 +387,4 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 });
 
 // ── Bootstrap ─────────────────────────────────────────────────────────────────
-init().catch(err => console.error('[Epstein Highlighter] Init failed:', err));
+init().catch(err => console.error('[Epstein Files Highlighter] Init failed:', err));

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Epstein Manifest",
+  "name": "Epstein Files Highlighter",
   "version": "1.0.1",
   "description": "Highlights names from the Epstein files as you browse.",
   "permissions": ["storage", "activeTab", "alarms"],
@@ -37,6 +37,6 @@
       "48": "icons/icon48.png"
     },
     "default_popup": "popup/popup.html",
-    "default_title": "Epstein Manifest"
+    "default_title": "Epstein Files Highlighter"
   }
 }

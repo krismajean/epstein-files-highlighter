@@ -52,10 +52,10 @@ async function fetchAndCacheNames() {
         epsteinNames: names,
         namesFetchedAt: Date.now(),
       });
-      console.log(`[Epstein Highlighter] Cached ${names.length} names from Wikipedia`);
+      console.log(`[Epstein Files Highlighter] Cached ${names.length} names from Wikipedia`);
     }
   } catch (err) {
-    console.warn('[Epstein Highlighter] Failed to refresh names from Wikipedia:', err.message);
+    console.warn('[Epstein Files Highlighter] Failed to refresh names from Wikipedia:', err.message);
     // Non-fatal: content scripts will use HARDCODED_NAMES as fallback
   }
 }

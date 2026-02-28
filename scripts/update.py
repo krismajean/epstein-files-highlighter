@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Update the Epstein Manifest extension: refresh the name list and/or create the store zip.
+Update the Epstein Files Highlighter extension: refresh the name list and/or create the store zip.
 
-  python3 scripts/update.py              # update list + create zip
+  python3 scripts/update.py             # update list + create zip
   python3 scripts/update.py --list      # only update content/names.js from Wikipedia
   python3 scripts/update.py --zip       # only create manifest-extension.zip in parent dir
 
@@ -58,7 +58,7 @@ def expand_and_names(names_with_anchors):
 
 
 def fetch_sections():
-    req = urllib.request.Request(WIKI_URL, headers={"User-Agent": "EpsteinManifest/1.0"})
+    req = urllib.request.Request(WIKI_URL, headers={"User-Agent": "EpsteinFilesHighlighter/1.0"})
     with urllib.request.urlopen(req) as r:
         data = json.load(r)
     return data.get("parse", {}).get("sections", [])
@@ -144,7 +144,7 @@ def cmd_zip(repo_root):
             to_add.append((path, entry))
         else:
             for dirpath, dirnames, filenames in os.walk(path):
-                for d in list(dirnames):
+                for d in list[str](dirnames):
                     if d in ZIP_EXCLUDE_DIRS or d.startswith("."):
                         dirnames.remove(d)
                 for f in filenames:
@@ -177,6 +177,7 @@ def main():
     do_zip = args.zip or (not args.list and not args.zip)
 
     ok = True
+    
     if do_list:
         ok = cmd_update_list(repo_root) and ok
     if do_zip:

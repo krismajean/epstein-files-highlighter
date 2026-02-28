@@ -1,16 +1,16 @@
-# Epstein Manifest
+# Epstein Files Highlighter
 
-![Epstein Manifest](icons/manifest-header.png)
+![Epstein Files Highlighter](icons/manifest-header.png)
 
 > *Bringing light to the darkness*
 
-Epstein Manifest highlights names from the [Epstein files](https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files) as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.
+Epstein Files Highlighter highlights names from the [Epstein files](https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files) as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.
 
 ---
 
 ## How it works
 
-When you visit any webpage, Epstein Manifest scans the text for names listed in the Wikipedia article *List of people named in the Epstein files*. When a name is found:
+When you visit any webpage, Epstein Files Highlighter scans the text for names listed in the Wikipedia article *List of people named in the Epstein files*. When a name is found:
 
 - A small **highlighter icon** appears next to the name
 - Optionally, the **name itself is highlighted** in yellow
@@ -40,7 +40,7 @@ Selecting **Redact** in the highlight color options replaces the colored highlig
 
 ## Important disclaimer
 
-**Appearing in the Epstein files does not mean a person has done anything wrong.** The files include names of victims, witnesses, associates, and people mentioned only incidentally. Epstein Manifest makes no judgement about any individual — it simply shows you who appears, and lets you follow through to Wikipedia to read the context for yourself.
+**Appearing in the Epstein files does not mean a person has done anything wrong.** The files include names of victims, witnesses, associates, and people mentioned only incidentally. Epstein Files Highlighter makes no judgement about any individual — it simply shows you who appears, and lets you follow through to Wikipedia to read the context for yourself.
 
 Matching is also by name only. Someone who shares a name with a listed person may occasionally be tagged in error. Always click through to verify.
 
@@ -48,7 +48,7 @@ Matching is also by name only. Someone who shares a name with a listed person ma
 
 ## Installation
 
-Epstein Manifest is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/manifest-beta/aiijlechhdpdnjihmmdkidckengecdlj). Install from there, or to run from source:
+Epstein Files Highlighter is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/manifest-beta/aiijlechhdpdnjihmmdkidckengecdlj). Install from there, or to run from source:
 
 1. Download or clone this repository
 2. Open Chrome and go to `chrome://extensions`
@@ -99,7 +99,7 @@ The zip is written to the parent folder (e.g. `chrome/manifest-extension.zip`).
 
 ## Privacy
 
-Epstein Manifest does not collect, store, or transmit any personal data. Page text is processed locally on your device. The only external request is to the Wikipedia API to fetch the name list. See [PRIVACY.md](PRIVACY.md) for full details.
+Epstein Files Highlighter does not collect, store, or transmit any personal data. Page text is processed locally on your device. The only external request is to the Wikipedia API to fetch the name list. See [PRIVACY.md](PRIVACY.md) for full details.
 
 ---
 

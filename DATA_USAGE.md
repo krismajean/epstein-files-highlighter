@@ -1,10 +1,10 @@
 # Chrome Web Store — Data usage disclosure
 
-Use this when filling out the **Privacy practices → Data usage** section in the Chrome Web Store Developer Dashboard. Epstein Manifest does **not** collect user data.
+Use this when filling out the **Privacy practices → Data usage** section in the Chrome Web Store Developer Dashboard. Epstein Files Highlighter does **not** collect user data.
 
 ---
 
-## What Epstein Manifest does and doesn’t do
+## What Epstein Files Highlighter does and doesn’t do
 
 - **Does not collect** any data from the user or from their browsing and does not send it to any server.
 - **Reads page text only in the browser** to match names; nothing is transmitted off the device.
@@ -41,7 +41,7 @@ The form has two parts:
 **Select: the certification that fits “limited use” / no unnecessary data use.**
 
 - Check the box that certifies your extension **complies with the Chrome Web Store policy on limited use** (or words to that effect).
-- If there are multiple certification statements, check the one(s) that say you use data only as needed for the extension’s single purpose and do not use it for unrelated purposes (e.g. advertising, selling data). For Epstein Manifest, we don’t collect data at all, so those certifications apply.
+- If there are multiple certification statements, check the one(s) that say you use data only as needed for the extension’s single purpose and do not use it for unrelated purposes (e.g. advertising, selling data). For Epstein Files Highlighter, we don’t collect data at all, so those certifications apply.
 
 ---
 
