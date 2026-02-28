@@ -1,6 +1,5 @@
 // popup.js
 const WIKI_BASE = 'https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#';
-const BUILTIN_LIST_COUNT = 156;
 
 const COLORS = [
   { hex: '#ffe066', label: 'Yellow' },
@@ -8,12 +7,20 @@ const COLORS = [
   { hex: '#da90f5', label: 'Purple' },
 ];
 
+/** Returns the number of entries in the built-in content/names.js list. */
+async function getBuiltinListCount() {
+  const url = chrome.runtime.getURL('content/names.js');
+  const text = await fetch(url).then((r) => r.text());
+  const matches = text.match(/\{\s*name:\s*"/g);
+  return matches ? matches.length : 0;
+}
+
 // ── Storage: prefs + status ───────────────────────────────────────────────────
 chrome.storage.local.get(
   ['epsteinNames', 'namesFetchedAt', 'enabled', 'showIcon', 'showHighlight',
    'highlightColor', 'iconColor', 'autoSyncWiki'],
-  (result) => {
-    const count = result.epsteinNames?.length ?? BUILTIN_LIST_COUNT;
+  async (result) => {
+    const count = result.epsteinNames?.length ?? await getBuiltinListCount();
     const fetched = result.namesFetchedAt;
 
     let sourceStr;

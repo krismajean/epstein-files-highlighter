@@ -4,14 +4,14 @@ Update the Epstein Files Highlighter extension: refresh the name list and/or cre
 
   python3 scripts/update.py             # update list + create zip
   python3 scripts/update.py --list      # only update content/names.js from Wikipedia
-  python3 scripts/update.py --zip       # only create manifest-extension.zip in parent dir
+  python3 scripts/update.py --zip       # only create epstein-files-highlighter.zip in project dir
 
 List update: fetches Wikipedia "List of people named in the Epstein files", applies
 the same scrub rules as the service worker, splits "X and Y" into two entries with
 the same anchor, and overwrites content/names.js.
 
 Zip: packages manifest.json, background/, content/, icons/, popup/ into
-manifest-extension.zip (in the folder that contains the extension).
+epstein-files-highlighter.zip (in the project root).
 """
 
 import argparse
@@ -131,8 +131,7 @@ def _should_exclude(arcname):
 
 
 def cmd_zip(repo_root):
-    parent = os.path.dirname(repo_root)
-    zip_path = os.path.join(parent, "manifest-extension.zip")
+    zip_path = os.path.join(repo_root, "epstein-files-highlighter.zip")
 
     to_add = []
     for entry in ZIP_INCLUDE:
@@ -170,7 +169,7 @@ def main():
 
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--list", action="store_true", help="Only update content/names.js from Wikipedia")
-    ap.add_argument("--zip", action="store_true", help="Only create manifest-extension.zip")
+    ap.add_argument("--zip", action="store_true", help="Only create epstein-files-highlighter.zip")
     args = ap.parse_args()
 
     do_list = args.list or (not args.list and not args.zip)

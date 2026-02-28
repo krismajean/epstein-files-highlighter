@@ -52,6 +52,7 @@ const HARDCODED_NAMES = [
   { name: "Lawrence Krauss", anchor: "Lawrence_Krauss" },
   { name: "Miroslav Lajčák", anchor: "Miroslav_Lajčák" },
   { name: "Peter Mandelson", anchor: "Peter_Mandelson" },
+  { name: "Matthew Menchel", anchor: "Matthew_Menchel" },
   { name: "Nathan Myhrvold", anchor: "Nathan_Myhrvold" },
   { name: "Stacey Plaskett", anchor: "Stacey_Plaskett" },
   { name: "Thomas Pritzker", anchor: "Thomas_Pritzker" },

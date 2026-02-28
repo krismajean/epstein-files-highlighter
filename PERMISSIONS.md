@@ -72,12 +72,12 @@ This document explains why each permission and capability in the extension manif
 
 ## Web accessible resources
 
-### `web_accessible_resources`: `icons/manifest.svg` with `matches`: `["<all_urls>"]`
+### `web_accessible_resources`: `icons/epstein-files-highlighter.svg` with `matches`: `["<all_urls>"]`
 
 **Purpose:** Let the content script inject and display the small “highlighter” icon next to matched names on any page.
 
 **Use in the extension:**
-- The content script adds an inline icon (or a reference to this resource) next to each highlighted name. The icon is loaded from the extension via `chrome.runtime.getURL('icons/manifest.svg')`. For the browser to allow that resource to be used in page context, it must be listed in `web_accessible_resources` with matching `matches`.
+- The content script adds an inline icon (or a reference to this resource) next to each highlighted name. The icon is loaded from the extension via `chrome.runtime.getURL('icons/epstein-files-highlighter.svg')`. For the browser to allow that resource to be used in page context, it must be listed in `web_accessible_resources` with matching `matches`.
 
 **Why it’s needed:** Without declaring this resource as web-accessible for the pages where the content script runs, the icon would not load on many sites due to extension resource restrictions.
 
@@ -92,7 +92,7 @@ This document explains why each permission and capability in the extension manif
 | `alarms` | Schedule a 24-hour refresh only when the user enables “Auto-sync from Wikipedia” and has granted the optional host permission; no background activity otherwise. |
 | `https://en.wikipedia.org/*` (optional) | Fetch the name list from Wikipedia only when the user clicks “Sync from Wikipedia” or turns on “Auto-sync” and grants access; no user or page data is sent. |
 | Content script `<all_urls>` | Run the highlighter on any site; exclude the Wikipedia list page. Text is processed only locally. |
-| Web accessible: `icons/manifest.svg` | Allow the highlighter icon to be shown next to names on any page. |
+| Web accessible: `icons/epstein-files-highlighter.svg` | Allow the highlighter icon to be shown next to names on any page. |
 
 ---
 

@@ -1,6 +1,6 @@
 # Epstein Files Highlighter
 
-![Epstein Files Highlighter](icons/manifest-header.png)
+![Epstein Files Highlighter](icons/readme-header.png)
 
 > *Bringing light to the darkness*
 
@@ -69,8 +69,8 @@ manifest-extension/
 │   ├── names.js               # Hardcoded fallback name list (generated from Wikipedia)
 │   └── content.js             # Page scanner, DOM injection, highlight logic
 ├── icons/
-│   ├── manifest.svg           # Inline icon shown next to names
-│   ├── manifest-header.png    # README header image
+│   ├── epstein-files-highlighter.svg  # Inline icon shown next to names
+│   ├── readme-header.png      # README header image
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
@@ -88,12 +88,12 @@ manifest-extension/
 To refresh the hardcoded name list from Wikipedia and create the Chrome Web Store zip:
 
 ```bash
-python3 scripts/update.py              # update list + create manifest-extension.zip
+python3 scripts/update.py              # update list + create epstein-files-highlighter.zip
 python3 scripts/update.py --list       # only update content/names.js
-python3 scripts/update.py --zip       # only create manifest-extension.zip
+python3 scripts/update.py --zip       # only create epstein-files-highlighter.zip
 ```
 
-The zip is written to the parent folder (e.g. `chrome/manifest-extension.zip`).
+The zip is written to the project root (`epstein-files-highlighter.zip`).
 
 ---
 

@@ -137,7 +137,7 @@ function buildPattern(names) {
 function injectStyles() {
   if (document.getElementById('epstein-highlighter-styles')) return;
 
-  const iconUrl = chrome.runtime.getURL('icons/manifest.svg');
+  const iconUrl = chrome.runtime.getURL('icons/epstein-files-highlighter.svg');
   const style = document.createElement('style');
   style.id = 'epstein-highlighter-styles';
   style.textContent = `
