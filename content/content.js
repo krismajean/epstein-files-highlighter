@@ -64,6 +64,7 @@ async function init() {
     }
     if (changes.showPreview) {
       previewEnabled = changes.showPreview.newValue === true;
+      updateAllIconTitles();
     }
   });
 }
@@ -73,6 +74,18 @@ function applyDisplayPrefs(prefs) {
   if (!body) return;
   body.classList.toggle('manifest-hide-icon',      prefs.showIcon      === false);
   body.classList.toggle('manifest-hide-highlight', prefs.showHighlight === false);
+}
+
+/** When preview is on, hide native title so it doesn't cover the custom tooltip; when off, show it. */
+function updateAllIconTitles() {
+  document.querySelectorAll(`.${ICON_CLASS}`).forEach((link) => {
+    if (previewEnabled) {
+      link.removeAttribute('title');
+    } else {
+      const name = link.dataset.epName || link.previousElementSibling?.textContent?.trim() || '';
+      link.title = `${name} — named in Epstein files · Epstein Files Highlighter`;
+    }
+  });
 }
 
 function applyColors(prefs) {
@@ -325,9 +338,12 @@ function processTextNode(textNode) {
     link.href = WIKI_BASE + entry.anchor;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.title = `${entry.name} — named in Epstein files · Epstein Files Highlighter`;
+    if (!previewEnabled) {
+      link.title = `${entry.name} — named in Epstein files · Epstein Files Highlighter`;
+    }
     link.setAttribute('aria-label', `${entry.name} named in Epstein files`);
     link.dataset.epAnchor = entry.anchor;
+    link.dataset.epName = entry.name;
     if (previewEnabled) {
       link.addEventListener('mouseenter', handlePreviewEnter);
       link.addEventListener('mouseleave', handlePreviewLeave);
