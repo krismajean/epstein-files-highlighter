@@ -19,12 +19,16 @@ let isProcessing = false;
 let pendingRoots = new Set();
 const processedNodes = new WeakSet();
 const pageCounts = new Map(); // canonical name -> count
+let previewEnabled = false;
+const previewCache = new Map(); // anchor -> html
+let previewTooltip = null;
+let previewHideTimer = null;
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
   const stored = await chrome.storage.local.get([
     'epsteinNames', 'namesFetchedAt', 'enabled', 'showIcon', 'showHighlight',
-    'highlightColor', 'iconColor',
+    'highlightColor', 'iconColor', 'showPreview',
   ]);
 
   if (stored.enabled === false) return;
@@ -39,6 +43,7 @@ async function init() {
   injectStyles();
   applyDisplayPrefs(stored);
   applyColors(stored);
+  previewEnabled = stored.showPreview === true;
   queueScan(document.body);
   setupObserver();
 
@@ -56,6 +61,9 @@ async function init() {
     }
     if (changes.highlightColor || changes.iconColor || changes.showHighlight) {
       chrome.storage.local.get(['highlightColor', 'iconColor', 'showHighlight'], applyColors);
+    }
+    if (changes.showPreview) {
+      previewEnabled = changes.showPreview.newValue === true;
     }
   });
 }
@@ -319,6 +327,13 @@ function processTextNode(textNode) {
     link.rel = 'noopener noreferrer';
     link.title = `${entry.name} — named in Epstein files · Epstein Files Highlighter`;
     link.setAttribute('aria-label', `${entry.name} named in Epstein files`);
+    link.dataset.epAnchor = entry.anchor;
+    if (previewEnabled) {
+      link.addEventListener('mouseenter', handlePreviewEnter);
+      link.addEventListener('mouseleave', handlePreviewLeave);
+      link.addEventListener('focus', handlePreviewEnter);
+      link.addEventListener('blur', handlePreviewLeave);
+    }
     frag.appendChild(link);
 
     cursor = end;
@@ -370,6 +385,102 @@ function undoHighlighting() {
   document.querySelectorAll(`.${ICON_CLASS}`).forEach(a => a.remove());
   const styleEl = document.getElementById('epstein-highlighter-styles');
   if (styleEl) styleEl.remove();
+}
+
+function ensurePreviewTooltip() {
+  if (previewTooltip && previewTooltip.isConnected) return previewTooltip;
+  const tip = document.createElement('div');
+  tip.id = 'epstein-preview-tooltip';
+  tip.style.position = 'absolute';
+  tip.style.zIndex = '2147483647';
+  tip.style.maxWidth = '340px';
+  tip.style.background = 'rgba(10, 16, 28, 0.96)';
+  tip.style.color = '#f8f9ff';
+  tip.style.fontSize = '12px';
+  tip.style.lineHeight = '1.45';
+  tip.style.padding = '8px 10px';
+  tip.style.borderRadius = '4px';
+  tip.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.45)';
+  tip.style.pointerEvents = 'none';
+  tip.style.display = 'none';
+  tip.style.maxHeight = '240px';
+  tip.style.overflow = 'auto';
+  (document.body || document.documentElement).appendChild(tip);
+  previewTooltip = tip;
+  return tip;
+}
+
+function positionPreviewTooltip(target) {
+  const tip = ensurePreviewTooltip();
+  const rect = target.getBoundingClientRect();
+  const top = window.scrollY + rect.bottom + 6;
+  let left = window.scrollX + rect.left;
+  const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+  const estimatedWidth = Math.min(340, viewportWidth - 16);
+  if (left + estimatedWidth > window.scrollX + viewportWidth) {
+    left = window.scrollX + viewportWidth - estimatedWidth - 8;
+  }
+  tip.style.left = `${Math.max(left, window.scrollX + 8)}px`;
+  tip.style.top = `${top}px`;
+}
+
+function requestWikiPreview(anchor) {
+  return new Promise((resolve) => {
+    if (!chrome.runtime?.id) {
+      resolve({ ok: false, error: 'Extension context invalidated' });
+      return;
+    }
+    try {
+      chrome.runtime.sendMessage({ type: 'getWikiPreview', anchor }, (res) => {
+        if (chrome.runtime.lastError) {
+          resolve({ ok: false, error: chrome.runtime.lastError.message });
+        } else {
+          resolve(res || { ok: false, error: 'No response' });
+        }
+      });
+    } catch (err) {
+      resolve({ ok: false, error: err.message });
+    }
+  });
+}
+
+async function handlePreviewEnter(event) {
+  if (!previewEnabled) return;
+  const target = event.currentTarget;
+  const anchor = target?.dataset?.epAnchor;
+  if (!anchor) return;
+
+  if (previewHideTimer) {
+    clearTimeout(previewHideTimer);
+    previewHideTimer = null;
+  }
+
+  const tip = ensurePreviewTooltip();
+  positionPreviewTooltip(target);
+  tip.style.display = 'block';
+  tip.textContent = 'Loading preview…';
+
+  const cached = previewCache.get(anchor);
+  if (cached) {
+    tip.innerHTML = cached;
+    return;
+  }
+
+  const res = await requestWikiPreview(anchor);
+  if (!res?.ok || !res.html) {
+    tip.textContent = res?.error || 'Preview unavailable';
+    return;
+  }
+  previewCache.set(anchor, res.html);
+  tip.innerHTML = res.html;
+}
+
+function handlePreviewLeave() {
+  if (!previewTooltip) return;
+  if (previewHideTimer) clearTimeout(previewHideTimer);
+  previewHideTimer = setTimeout(() => {
+    if (previewTooltip) previewTooltip.style.display = 'none';
+  }, 120);
 }
 
 // ── Message listener (popup asks for page counts) ─────────────────────────────

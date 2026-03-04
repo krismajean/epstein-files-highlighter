@@ -18,7 +18,7 @@ async function getBuiltinListCount() {
 // ── Storage: prefs + status ───────────────────────────────────────────────────
 chrome.storage.local.get(
   ['epsteinNames', 'namesFetchedAt', 'enabled', 'showIcon', 'showHighlight',
-   'highlightColor', 'iconColor', 'autoSyncWiki'],
+   'highlightColor', 'iconColor', 'autoSyncWiki', 'showPreview'],
   async (result) => {
     const count = result.epsteinNames?.length ?? await getBuiltinListCount();
     const fetched = result.namesFetchedAt;
@@ -89,6 +89,25 @@ chrome.storage.local.get(
       chrome.runtime.sendMessage({ type: 'setAutoSync', enabled }, () => { void chrome.runtime.lastError; });
     });
 
+    // Wikipedia preview on hover (also requires Wikipedia permission)
+    const cbPreview = document.getElementById('showPreview');
+    cbPreview.checked = result.showPreview === true;
+    cbPreview.addEventListener('change', async () => {
+      const enabled = cbPreview.checked;
+      if (enabled) {
+        const granted = await chrome.permissions.request({ origins: ['https://en.wikipedia.org/*'] });
+        if (!granted) {
+          cbPreview.checked = false;
+          statusEl.textContent = statusEl.textContent.replace(
+            /^(\d+ names tracked)/,
+            '$1 · preview needs Wikipedia access',
+          );
+          return;
+        }
+      }
+      chrome.storage.local.set({ showPreview: enabled });
+    });
+
     // Redact row
     const redactRow = document.getElementById('redactRow');
     if (isRedact) redactRow.classList.add('active');
@@ -134,6 +153,7 @@ const DEFAULTS = {
   highlightColor: '#ffe066',
   iconColor: '#ffe066',
   autoSyncWiki: false,
+  showPreview: false,
 };
 
 document.getElementById('resetBtn').addEventListener('click', () => {

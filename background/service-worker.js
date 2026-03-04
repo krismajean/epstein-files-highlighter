@@ -10,6 +10,14 @@ const WIKI_API =
   '&format=json' +
   '&origin=*';
 
+const WIKI_TEXT_API =
+  'https://en.wikipedia.org/w/api.php' +
+  '?action=parse' +
+  '&page=List_of_people_named_in_the_Epstein_files' +
+  '&prop=text' +
+  '&format=json' +
+  '&origin=*';
+
 const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
 // Section headers and nav to skip (not people's names)
@@ -19,6 +27,27 @@ const SKIP_SECTIONS = new Set([
 ]);
 // Alphabet range headers from the Wikipedia list (e.g. "A-C", "D-F")
 const ALPHABET_RANGE = /^[A-Za-z]-[A-Za-z]$/;
+
+async function fetchSectionPreview(anchor) {
+  const resp = await fetch(WIKI_API);
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const data = await resp.json();
+  const sections = data?.parse?.sections ?? [];
+  const section = sections.find((s) => s.anchor === anchor);
+  if (!section) throw new Error('Section not found for anchor');
+
+  const idx = section.index;
+  const textResp = await fetch(`${WIKI_TEXT_API}&section=${encodeURIComponent(idx)}`);
+  if (!textResp.ok) throw new Error(`HTTP ${textResp.status}`);
+  const textData = await textResp.json();
+  let html = textData?.parse?.text?.['*'] || '';
+  if (!html) throw new Error('No text returned for section');
+
+  // Prefer the first paragraph as a concise preview
+  const m = html.match(/<p[^>]*>[\s\S]*?<\/p>/i);
+  if (m) html = m[0];
+  return html;
+}
 
 async function fetchAndCacheNames() {
   try {
@@ -92,7 +121,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   }
 });
 
-// ── Messages: badge + refresh names ───────────────────────────────────────────
+// ── Messages: badge + refresh names + previews ───────────────────────────────
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'refreshNames') {
     chrome.permissions.contains({ origins: ['https://en.wikipedia.org/*'] }).then((granted) => {
@@ -130,6 +159,36 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
     sendResponse({ ok: true });
     return false;
+  }
+
+  if (msg.type === 'getWikiPreview') {
+    const anchor = msg.anchor;
+    if (!anchor) {
+      sendResponse({ ok: false, error: 'Missing anchor' });
+      return false;
+    }
+    (async () => {
+      const granted = await chrome.permissions.contains({ origins: ['https://en.wikipedia.org/*'] });
+      if (!granted) {
+        sendResponse({ ok: false, error: 'Permission not granted' });
+        return;
+      }
+      const { wikiPreviewCache = {} } = await chrome.storage.local.get('wikiPreviewCache');
+      const cached = wikiPreviewCache[anchor];
+      if (cached && Date.now() - cached.fetchedAt < CACHE_MAX_AGE_MS) {
+        sendResponse({ ok: true, html: cached.html, fromCache: true });
+        return;
+      }
+      try {
+        const html = await fetchSectionPreview(anchor);
+        wikiPreviewCache[anchor] = { html, fetchedAt: Date.now() };
+        await chrome.storage.local.set({ wikiPreviewCache });
+        sendResponse({ ok: true, html, fromCache: false });
+      } catch (err) {
+        sendResponse({ ok: false, error: err?.message || String(err) });
+      }
+    })();
+    return true;
   }
 
   if (msg.type !== 'setBadge') return;
