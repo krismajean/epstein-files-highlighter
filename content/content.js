@@ -209,6 +209,20 @@ function injectStyles() {
       color: #fff !important;
       outline-color: #ff4444;
     }
+    /* Preview tooltip: force light text; name (links/bold) white and bold */
+    #epstein-preview-tooltip,
+    #epstein-preview-tooltip * {
+      color: #f8f9ff !important;
+    }
+    #epstein-preview-tooltip a,
+    #epstein-preview-tooltip b,
+    #epstein-preview-tooltip strong {
+      font-weight: bold !important;
+      color: #f8f9ff !important;
+    }
+    #epstein-preview-tooltip a {
+      text-decoration: none;
+    }
   `;
   (document.head || document.documentElement).appendChild(style);
 }
