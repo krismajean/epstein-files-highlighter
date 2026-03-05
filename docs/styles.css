@@ -31,8 +31,25 @@ body {
 }
 
 .hero-inner {
-  max-width: 600px;
+  max-width: 680px;
   margin: 0 auto;
+}
+
+.hero-logo {
+  display: block;
+  margin: 0 auto 0.75rem;
+  border-radius: 8px;
+}
+
+.hero-banner {
+  margin: 2rem 0 0;
+}
+
+.hero-banner img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
 }
 
 .hero h1 {
@@ -121,6 +138,30 @@ body {
 
 .feature-list li {
   margin-bottom: 0.4em;
+}
+
+.screenshot {
+  margin: 2rem 0 0;
+}
+
+.screenshot img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.screenshot figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.screenshot-split + .screenshot-split {
+  margin-top: 2rem;
 }
 
 .feature-grid {
