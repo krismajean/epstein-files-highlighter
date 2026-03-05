@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-Update the Epstein Files Highlighter extension: refresh the name list and/or create the store zip.
+Update the Epstein Files Highlighter extension: refresh the name list, demo previews, and/or create the store zip.
 
-  python3 scripts/update.py             # update list + create zip
+  python3 scripts/update.py             # update list + demo previews + zip
   python3 scripts/update.py --list      # only update content/names.js from Wikipedia
+  python3 scripts/update.py --previews # only update docs/demo-previews.json (hero demo tooltips)
   python3 scripts/update.py --zip       # only create epstein-files-highlighter.zip in project dir
 
 List update: fetches Wikipedia "List of people named in the Epstein files", applies
 the same scrub rules as the service worker, splits "X and Y" into two entries with
 the same anchor, and overwrites content/names.js.
+
+Demo previews: fetches the first paragraph for Howard Lutnick, Alan Dershowitz, and
+Ghislaine Maxwell and overwrites docs/demo-previews.json (used by the promo page hero demo).
 
 Zip: packages manifest.json, background/, content/, icons/, popup/ into
 epstein-files-highlighter.zip (in the project root).
@@ -17,6 +21,7 @@ epstein-files-highlighter.zip (in the project root).
 import argparse
 import json
 import os
+import re
 import sys
 import urllib.request
 import zipfile
@@ -29,6 +34,17 @@ WIKI_URL = (
     "&format=json"
     "&origin=*"
 )
+
+WIKI_TEXT_URL = (
+    "https://en.wikipedia.org/w/api.php"
+    "?action=parse"
+    "&page=List_of_people_named_in_the_Epstein_files"
+    "&prop=text"
+    "&format=json"
+    "&origin=*"
+)
+
+DEMO_ANCHORS = ["Howard_Lutnick", "Alan_Dershowitz", "Ghislaine_Maxwell"]
 
 SKIP_SECTIONS = {
     "References", "External links", "Contents", "See also", "Notes",
@@ -118,6 +134,43 @@ def cmd_update_list(repo_root):
     return True
 
 
+def _get_section_index(sections, anchor):
+    for s in sections:
+        if (s.get("anchor") or "").strip() == anchor:
+            return s.get("index")
+    return None
+
+
+def cmd_update_demo_previews(repo_root):
+    out_path = os.path.join(repo_root, "docs", "demo-previews.json")
+    if not os.path.isdir(os.path.join(repo_root, "docs")):
+        print("Expected docs/ under repo root:", repo_root, file=sys.stderr)
+        return False
+    print("Fetching demo previews from Wikipedia...")
+    sections = fetch_sections()
+    previews = {}
+    for anchor in DEMO_ANCHORS:
+        idx = _get_section_index(sections, anchor)
+        if idx is None:
+            previews[anchor] = ""
+            continue
+        url = WIKI_TEXT_URL + "&section=" + str(idx)
+        req = urllib.request.Request(url, headers={"User-Agent": "EpsteinFilesHighlighter/1.0"})
+        try:
+            with urllib.request.urlopen(req, timeout=15) as r:
+                data = json.load(r)
+            html = data.get("parse", {}).get("text", {}).get("*", "")
+            m = re.search(r"<p[^>]*>[\s\S]*?</p>", html, re.IGNORECASE) if html else None
+            previews[anchor] = m.group(0) if m else ""
+        except Exception as e:
+            print(f"  {anchor}: {e}", file=sys.stderr)
+            previews[anchor] = ""
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(previews, f, indent=2, ensure_ascii=False)
+    print(f"Wrote {out_path}")
+    return True
+
+
 def _should_exclude(arcname):
     if any(arcname.endswith(s) for s in ZIP_EXCLUDE_SUFFIXES):
         return True
@@ -169,16 +222,20 @@ def main():
 
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--list", action="store_true", help="Only update content/names.js from Wikipedia")
+    ap.add_argument("--previews", action="store_true", help="Only update docs/demo-previews.json for the promo hero demo")
     ap.add_argument("--zip", action="store_true", help="Only create epstein-files-highlighter.zip")
     args = ap.parse_args()
 
-    do_list = args.list or (not args.list and not args.zip)
-    do_zip = args.zip or (not args.list and not args.zip)
+    do_list = args.list or (not args.list and not args.zip and not args.previews)
+    do_previews = args.previews or (not args.list and not args.zip and not args.previews)
+    do_zip = args.zip or (not args.list and not args.zip and not args.previews)
 
     ok = True
-    
+
     if do_list:
         ok = cmd_update_list(repo_root) and ok
+    if do_previews:
+        ok = cmd_update_demo_previews(repo_root) and ok
     if do_zip:
         ok = cmd_zip(repo_root) and ok
     if not ok:

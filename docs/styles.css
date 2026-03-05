@@ -258,6 +258,56 @@ body {
   display: none !important;
 }
 
+/* Demo: Wikipedia preview tooltip (content from demo-previews.json) */
+.demo-preview-tooltip {
+  position: fixed;
+  z-index: 10000;
+  max-width: 340px;
+  max-height: 260px;
+  background: rgba(10, 16, 28, 0.96);
+  color: #f8f9ff;
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 8px 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.demo-preview-tooltip.demo-preview-tooltip-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.demo-preview-tooltip-content {
+  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.demo-preview-tooltip-content a {
+  color: #f8f9ff;
+  text-decoration: underline;
+}
+
+.demo-preview-tooltip-content a:hover {
+  color: #ffe066;
+}
+
+.demo-preview-tooltip-footer {
+  font-size: 10px;
+  color: rgba(248, 249, 255, 0.65);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
 /* Demo popup facsimile */
 .demo-popup {
   background: #fff;

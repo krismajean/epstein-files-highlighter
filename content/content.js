@@ -486,7 +486,6 @@ function ensurePreviewTooltip() {
   wikiSvg.appendChild(circle);
   wikiSvg.appendChild(text);
   footer.appendChild(wikiSvg);
-  footer.appendChild(document.createTextNode(' From Wikipedia'));
   tip.appendChild(footer);
 
   tip.style.display = 'none';

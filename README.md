@@ -6,6 +6,8 @@
 
 Epstein Files Highlighter highlights names from the [Epstein files](https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files) as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.
 
+**See it in action:** [Promo site with demo](https://krismajean.github.io/epstein-files-highlighter/) — try the interactive hero (highlight, redact, preview on hover) before installing.
+
 ---
 
 ## How it works

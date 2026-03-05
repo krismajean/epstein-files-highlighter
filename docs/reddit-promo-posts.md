@@ -93,6 +93,32 @@ https://krismajean.github.io/epstein-files-highlighter/
 
 ---
 
+## More design / build insights (from the codebase)
+
+Use these where they fit — for r/chrome_extensions, longer posts, or follow-up comments.
+
+- **Don’t run on the source.** The content script uses `exclude_matches` so it never runs on the Wikipedia list page itself. No point highlighting names on the page that *is* the list — and it avoids noise and potential loops.
+
+- **Longest-first matching.** The name list is sorted by name length (longest first) before building the regex. That way “Donald Trump Jr.” matches before “Donald Trump” and you don’t get two overlapping highlights. Same idea in the background script when syncing from Wikipedia.
+
+- **Debounce the scanner.** A MutationObserver fires on every DOM change. Instead of scanning immediately, the code waits 120ms after the last mutation. Sites that add a node and then fill in text later (e.g. lazy-loaded cards) get one scan after they settle, not a bunch of partial scans.
+
+- **Snapshot then mutate.** The TreeWalker collects all matching text nodes into an array, then processes them. That way the walker isn’t invalidated by replacing nodes mid-walk. Avoids missing nodes or double-processing.
+
+- **Skip links and code.** There’s a `BLOCKED_TAGS` set: SCRIPT, STYLE, A, CODE, PRE, etc. We only scan text in “real” content, not inside nav links, ads, or code blocks. Cuts false positives and keeps the DOM changes minimal.
+
+- **Capital letter check.** After the regex matches, the code rejects matches whose first character is lowercase (e.g. “bill gates” in casual text). Reduces false positives when the list has “Bill Gates” but the page has lowercase.
+
+- **Optional host permission.** Wikipedia is in `optional_host_permissions` in the manifest. The extension works with zero host permissions; only “Sync from Wikipedia” (and optional preview) asks for access. Cleaner store listing and user trust.
+
+- **Fallback when cache is bad.** If the synced list is empty or too small (e.g. bad API response), the content script falls back to the hardcoded `names.js` list. The extension keeps working even when the network or Wikipedia is flaky.
+
+- **Same logic in two places.** The background worker and the Python `scripts/update.py` both fetch the Wikipedia list and apply the same scrub rules (skip sections, split “X and Y”, etc.). The hardcoded list and the synced list stay in sync with the same behavior.
+
+- **Promo site base URL.** On GitHub Pages the site lives at `.../epstein-files-highlighter/`. Relative asset paths broke when the URL had no trailing slash. Adding `<base href="https://.../epstein-files-highlighter/">` fixed CSS, JS, and images loading on the live site.
+
+---
+
 ## Links (promo page is already in the posts above)
 
 - **Promo page:** https://krismajean.github.io/epstein-files-highlighter/
