@@ -223,6 +223,21 @@ function injectStyles() {
     #epstein-preview-tooltip a {
       text-decoration: none;
     }
+    .epstein-preview-footer {
+      font-size: 10px;
+      color: rgba(248, 249, 255, 0.65);
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .epstein-preview-footer svg {
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
   `;
   (document.head || document.documentElement).appendChild(style);
 }
@@ -434,7 +449,47 @@ function ensurePreviewTooltip() {
   tip.style.pointerEvents = 'none';
   tip.style.display = 'none';
   tip.style.maxHeight = '240px';
-  tip.style.overflow = 'auto';
+  tip.style.overflow = 'hidden';
+  tip.style.display = 'flex';
+  tip.style.flexDirection = 'column';
+
+  const content = document.createElement('div');
+  content.className = 'epstein-preview-content';
+  content.style.overflow = 'auto';
+  content.style.flex = '1 1 auto';
+  content.style.minHeight = '0';
+  tip.appendChild(content);
+
+  const footer = document.createElement('div');
+  footer.className = 'epstein-preview-footer';
+  const svgNs = 'http://www.w3.org/2000/svg';
+  const wikiSvg = document.createElementNS(svgNs, 'svg');
+  wikiSvg.setAttribute('viewBox', '0 0 16 16');
+  wikiSvg.setAttribute('width', '10');
+  wikiSvg.setAttribute('height', '10');
+  wikiSvg.setAttribute('aria-hidden', 'true');
+  const circle = document.createElementNS(svgNs, 'circle');
+  circle.setAttribute('cx', '8');
+  circle.setAttribute('cy', '8');
+  circle.setAttribute('r', '7');
+  circle.setAttribute('fill', 'none');
+  circle.setAttribute('stroke', 'currentColor');
+  circle.setAttribute('stroke-width', '1.1');
+  const text = document.createElementNS(svgNs, 'text');
+  text.setAttribute('x', '8');
+  text.setAttribute('y', '12');
+  text.setAttribute('text-anchor', 'middle');
+  text.setAttribute('font-size', '9');
+  text.setAttribute('font-weight', 'bold');
+  text.setAttribute('fill', 'currentColor');
+  text.textContent = 'W';
+  wikiSvg.appendChild(circle);
+  wikiSvg.appendChild(text);
+  footer.appendChild(wikiSvg);
+  footer.appendChild(document.createTextNode(' From Wikipedia'));
+  tip.appendChild(footer);
+
+  tip.style.display = 'none';
   (document.body || document.documentElement).appendChild(tip);
   previewTooltip = tip;
   return tip;
@@ -486,23 +541,28 @@ async function handlePreviewEnter(event) {
   }
 
   const tip = ensurePreviewTooltip();
+  const body = tip.querySelector('.epstein-preview-content');
+  const footer = tip.querySelector('.epstein-preview-footer');
   positionPreviewTooltip(target);
-  tip.style.display = 'block';
-  tip.textContent = 'Loading preview…';
+  tip.style.display = 'flex';
+  footer.style.display = 'none';
+  body.textContent = 'Loading preview…';
 
   const cached = previewCache.get(anchor);
   if (cached) {
-    tip.innerHTML = cached;
+    body.innerHTML = cached;
+    footer.style.display = 'block';
     return;
   }
 
   const res = await requestWikiPreview(anchor);
   if (!res?.ok || !res.html) {
-    tip.textContent = res?.error || 'Preview unavailable';
+    body.textContent = res?.error || 'Preview unavailable';
     return;
   }
   previewCache.set(anchor, res.html);
-  tip.innerHTML = res.html;
+  body.innerHTML = res.html;
+  footer.style.display = 'block';
 }
 
 function handlePreviewLeave() {

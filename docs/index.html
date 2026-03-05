@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Epstein Files Highlighter — Chrome Extension</title>
+  <meta name="description" content="Highlights names from the Epstein files as you browse. Click the icon next to any name to go to their entry on Wikipedia.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>Epstein Files Highlighter</h1>
+      <p class="tagline">Bringing light to the darkness</p>
+      <p class="lead">Highlights names from the Epstein files as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.</p>
+      <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj" class="cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="section how">
+      <div class="wrap">
+        <h2>How it works</h2>
+        <p>When you visit any webpage, the extension scans the text for names listed in the Wikipedia article <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files" target="_blank" rel="noopener noreferrer">List of people named in the Epstein files</a>. When a name is found:</p>
+        <ul class="feature-list">
+          <li>A small <strong>highlighter icon</strong> appears next to the name</li>
+          <li>Optionally, the <strong>name is highlighted</strong> in your choice of color</li>
+          <li>The <strong>toolbar badge</strong> shows how many listed names appear on the page</li>
+          <li>Click the icon to open that person’s section on the Wikipedia list</li>
+          <li>With “Wikipedia preview on hover” enabled, hover the icon to see a short excerpt from Wikipedia</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section features">
+      <div class="wrap">
+        <h2>Features</h2>
+        <ul class="feature-grid">
+          <li><strong>Toolbar badge</strong> — count of unique names on the current page</li>
+          <li><strong>Popup</strong> — see which names appear on the page and how many times</li>
+          <li><strong>Wikipedia preview</strong> — optional hover tooltip with a snippet from the list article</li>
+          <li><strong>Toggle icon & highlight</strong> — show or hide the icon and colored background</li>
+          <li><strong>Color picker</strong> — choose highlight and icon color</li>
+          <li><strong>Redact mode</strong> — hide names under a black bar; hover to reveal</li>
+          <li><strong>Master switch</strong> — disable the extension with one click</li>
+          <li><strong>Works everywhere</strong> — any website, including SPAs and infinite scroll</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section privacy">
+      <div class="wrap">
+        <h2>Privacy</h2>
+        <p>Epstein Files Highlighter does not collect, store, or transmit any personal data. Page text is processed locally in your browser. The only optional request is to Wikipedia to fetch or refresh the name list when you choose to sync.</p>
+      </div>
+    </section>
+
+    <section class="section disclaimer">
+      <div class="wrap">
+        <h2>Disclaimer</h2>
+        <p><strong>Appearing in the Epstein files does not mean a person has done anything wrong.</strong> The files include names of victims, witnesses, associates, and people mentioned only incidentally. This extension makes no judgment about any individual — it simply shows who appears on the list and lets you follow through to Wikipedia to read the context.</p>
+        <p>Matching is by name only. Someone who shares a name with a listed person may occasionally be tagged in error. Always click through to verify.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj" target="_blank" rel="noopener noreferrer">Chrome Web Store</a>
+      <a href="https://github.com/krismajean/epstein-files-highlighter" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files" target="_blank" rel="noopener noreferrer">Wikipedia list</a>
+    </div>
+  </footer>
+</body>
+</html>
