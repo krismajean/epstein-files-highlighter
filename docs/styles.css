@@ -188,6 +188,21 @@ body {
   margin-bottom: 0;
 }
 
+.demo-article-source {
+  margin-top: 0.85em;
+  font-size: 0.85rem;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+.demo-article-source a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.demo-article-source a:hover {
+  text-decoration: underline;
+}
+
 /* Demo: extension-style name highlight (scoped to .hero-demo) */
 .hero-demo .epstein-name-span.manifest-highlighted {
   background: var(--demo-highlight) !important;
