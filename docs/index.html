@@ -14,15 +14,70 @@
 </head>
 <body>
   <header class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="hero-background.png" alt="">
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-inner">
       <img src="logo.png" alt="" class="hero-logo" width="64" height="64">
       <h1>Epstein Files Highlighter</h1>
       <p class="tagline">Bringing light to the darkness</p>
-      <p class="lead">Highlights names from the Epstein files as you browse. Click the icon next to any name to go directly to their entry on Wikipedia.</p>
+      <p class="lead">Highlights names from the Epstein files as you browse. Try the demo below — use the popup to change colors and redact.</p>
       <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj" class="cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
-      <figure class="hero-banner">
-        <img src="1.png" alt="Epstein Files Highlighter — highlight names from the Epstein files while you browse." width="800" height="450">
-      </figure>
+
+      <div class="hero-demo" id="heroDemo">
+        <article class="demo-article" aria-label="Demo article">
+          <header class="demo-article-header">
+            <span class="demo-article-kicker">U.S. Politics</span>
+            <h2 class="demo-article-title">Lutnick and Cantor Fitzgerald Under Scrutiny in Epstein Investigation</h2>
+            <p class="demo-article-meta">March 3, 2026</p>
+          </header>
+          <div class="demo-article-body">
+            <p><strong>Washington</strong> — Federal investigators have widened their inquiry into ties between financiers and the late Jeffrey Epstein’s network. <span class="epstein-name-span manifest-highlighted">Howard Lutnick</span><a class="epstein-ref-link" href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#Howard_Lutnick" target="_blank" rel="noopener noreferrer" title="Howard Lutnick — named in Epstein files" aria-label="Howard Lutnick named in Epstein files"></a>, the chief executive of Cantor Fitzgerald, has been asked to provide documents and testimony, people familiar with the matter said.</p>
+            <p>Lawyer <span class="epstein-name-span manifest-highlighted">Alan Dershowitz</span><a class="epstein-ref-link" href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#Alan_Dershowitz" target="_blank" rel="noopener noreferrer" title="Alan Dershowitz — named in Epstein files" aria-label="Alan Dershowitz named in Epstein files"></a>, who has long denied wrongdoing, was also named in the files. The prosecution at the trial of <span class="epstein-name-span manifest-highlighted">Ghislaine Maxwell</span><a class="epstein-ref-link" href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#Ghislaine_Maxwell" target="_blank" rel="noopener noreferrer" title="Ghislaine Maxwell — named in Epstein files" aria-label="Ghislaine Maxwell named in Epstein files"></a> cited flight logs and contact lists that mentioned dozens of public figures.</p>
+            <p>With the extension installed, names from the Epstein files are highlighted on any page — including articles like this one. Toggle highlight color, turn on redact mode, or hide the icon using the popup to the right.</p>
+          </div>
+        </article>
+        <aside class="demo-popup" id="demoPopup" aria-label="Extension popup demo">
+          <div class="demo-popup-header">
+            <span class="demo-popup-title">Epstein Files Highlighter</span>
+            <span class="demo-popup-tagline">Bringing light to the darkness</span>
+          </div>
+          <div class="demo-popup-hits">
+            <div class="demo-popup-hits-title">On this page</div>
+            <div class="demo-popup-hits-list">
+              <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#Howard_Lutnick" target="_blank" rel="noopener noreferrer" class="demo-hit-row">Howard Lutnick <span class="demo-hit-badge">1</span></a>
+              <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#Alan_Dershowitz" target="_blank" rel="noopener noreferrer" class="demo-hit-row">Alan Dershowitz <span class="demo-hit-badge">1</span></a>
+              <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files#Ghislaine_Maxwell" target="_blank" rel="noopener noreferrer" class="demo-hit-row">Ghislaine Maxwell <span class="demo-hit-badge">1</span></a>
+            </div>
+          </div>
+          <div class="demo-popup-controls">
+            <div class="demo-option-row">
+              <span class="demo-option-title">Highlight name</span>
+              <label class="demo-switch">
+                <input type="checkbox" id="demoShowHighlight" checked>
+                <span class="demo-slider"></span>
+              </label>
+            </div>
+            <div class="demo-color-row">
+              <span class="demo-color-label">Color</span>
+              <div class="demo-swatches" id="demoHighlightSwatches">
+                <button type="button" class="demo-swatch active" data-hex="#ffe066" title="Yellow"></button>
+                <button type="button" class="demo-swatch" data-hex="#90ee90" title="Green"></button>
+                <button type="button" class="demo-swatch" data-hex="#da90f5" title="Purple"></button>
+              </div>
+              <button type="button" class="demo-redact" id="demoRedact" title="Redact">Redact</button>
+            </div>
+            <div class="demo-option-row">
+              <span class="demo-option-title">Show icon next to name</span>
+              <label class="demo-switch">
+                <input type="checkbox" id="demoShowIcon" checked>
+                <span class="demo-slider"></span>
+              </label>
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   </header>
 
@@ -92,5 +147,6 @@
       <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files" target="_blank" rel="noopener noreferrer">Wikipedia list</a>
     </div>
   </footer>
+  <script src="demo.js"></script>
 </body>
 </html>
