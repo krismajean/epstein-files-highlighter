@@ -25,7 +25,7 @@
       <h1>Epstein Files Highlighter</h1>
       <p class="tagline">Bringing light to the darkness</p>
       <p class="lead">Highlights names from the Epstein files as you browse. Try the demo below — use the popup to change colors and redact.</p>
-      <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj" class="cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
+      <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj?utm_source=promo-site&amp;utm_medium=referral" class="cta" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
 
       <div class="hero-demo" id="heroDemo">
         <article class="demo-article" aria-label="Demo article">
@@ -145,11 +145,28 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj" target="_blank" rel="noopener noreferrer">Chrome Web Store</a>
+      <a href="https://chromewebstore.google.com/detail/epstein-files-highlighter/aiijlechhdpdnjihmmdkidckengecdlj?utm_source=promo-site&amp;utm_medium=referral" target="_blank" rel="noopener noreferrer">Chrome Web Store</a>
       <a href="https://github.com/krismajean/epstein-files-highlighter" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://en.wikipedia.org/wiki/List_of_people_named_in_the_Epstein_files" target="_blank" rel="noopener noreferrer">Wikipedia list</a>
+      <p class="attribution-ref" id="attributionRef" aria-live="polite"></p>
     </div>
   </footer>
   <script src="demo.js"></script>
+  <script>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var ref = params.get('ref') || params.get('utm_source');
+    if (ref) {
+      var el = document.getElementById('attributionRef');
+      if (el) {
+        el.textContent = 'Referred from the support site.';
+        el.classList.add('attribution-ref-visible');
+      }
+      // Optional: ping a URL you control to log ref (e.g. serverless function).
+      // Set window.ATTRIBUTION_PING_URL to your endpoint; it will receive ?ref=value
+      // if (window.ATTRIBUTION_PING_URL) { fetch(window.ATTRIBUTION_PING_URL + '?ref=' + encodeURIComponent(ref), { mode: 'no-cors' }); }
+    }
+  })();
+  </script>
 </body>
 </html>

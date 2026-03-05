@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Epstein Files Highlighter",
-  "version": "1.0.1",
-  "description": "Highlights names from the Epstein files as you browse.",
+  "version": "1.0.2",
+  "description": "Highlights names from the Epstein files as you browse. Optional Wikipedia preview on hover.",
   "permissions": ["storage", "activeTab", "alarms"],
   "optional_host_permissions": ["https://en.wikipedia.org/*"],
   "background": {

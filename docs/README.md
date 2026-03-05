@@ -5,3 +5,5 @@ This folder is the landing page for [Epstein Files Highlighter](https://github.c
 **To publish:** In the repo go to **Settings → Pages**. Under "Build and deployment", set **Source** to "Deploy from a branch", choose your branch (e.g. `main`), and set **Folder** to **/docs**. Save. The site will be at `https://<username>.github.io/epstein-files-highlighter/`.
 
 To change the Chrome Web Store link, edit the `href` of the "Add to Chrome" button and the footer link in `index.html`.
+
+**Attribution:** Use `?ref=source` (or `?utm_source=source`) when sharing the promo URL so you can tell where traffic comes from (e.g. `.../epstein-files-highlighter/?ref=reddit`). The page shows "Referred from: reddit" in the footer when the param is present. To log refs somewhere you control, set `window.ATTRIBUTION_PING_URL` before the attribution script runs and uncomment the fetch line in `index.html`.

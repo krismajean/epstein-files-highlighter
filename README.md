@@ -25,6 +25,7 @@ The extension starts with a built-in name list. You can update it from Wikipedia
 
 - **Toolbar badge** — at-a-glance count of unique Epstein file names on the current page
 - **Popup** — shows which names appear on the page and how many times each occurs
+- **Wikipedia preview on hover** — optional; hover the icon next to a name to see a short excerpt from that person’s section on the list (requires Wikipedia access)
 - **Toggle icon** — show or hide the highlighter icon next to names
 - **Toggle highlight** — show or hide the colored background on matched names
 - **Color picker** — choose your highlight and icon color from 7 options
